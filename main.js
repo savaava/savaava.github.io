@@ -213,6 +213,8 @@
     let glowX = 0, glowY = 0;
 
     document.addEventListener('mousemove', (e) => {
+        // Skip glow on touch devices if they trigger mousemove
+        if ('ontouchstart' in window) return;
         mouseX = e.clientX;
         mouseY = e.clientY;
         glowEl.style.opacity = '1';
@@ -242,15 +244,39 @@
     let isMouseInHero = false;
 
     if (heroImgContainer && sharpLayer) {
-        heroImgContainer.addEventListener('mousemove', (e) => {
+        const updateSpotlight = (x, y) => {
             const rect = heroImgContainer.getBoundingClientRect();
-            heroMouseX = e.clientX - rect.left;
-            heroMouseY = e.clientY - rect.top;
+            heroMouseX = x - rect.left;
+            heroMouseY = y - rect.top;
             isMouseInHero = true;
             sharpLayer.style.opacity = '1';
+        };
+
+        heroImgContainer.addEventListener('mousemove', (e) => {
+            updateSpotlight(e.clientX, e.clientY);
         });
 
+        // Touch interaction for mobile
+        heroImgContainer.addEventListener('touchstart', (e) => {
+            if (e.touches && e.touches[0]) {
+                updateSpotlight(e.touches[0].clientX, e.touches[0].clientY);
+            }
+        }, { passive: true });
+
+        heroImgContainer.addEventListener('touchmove', (e) => {
+            if (e.touches && e.touches[0]) {
+                updateSpotlight(e.touches[0].clientX, e.touches[0].clientY);
+            }
+        }, { passive: true });
+
         heroImgContainer.addEventListener('mouseleave', () => {
+            isMouseInHero = false;
+            sharpLayer.style.opacity = '0';
+        });
+
+        // Optional: Hide after release on touch? The user said "reveal on touch". 
+        // Let's hide it when touch ends to keep the "interactive" feel.
+        heroImgContainer.addEventListener('touchend', () => {
             isMouseInHero = false;
             sharpLayer.style.opacity = '0';
         });
@@ -403,6 +429,35 @@
                 if (prevIndex < 0) prevIndex = slides.length - 1;
                 updateCarousel(prevIndex);
             });
+        }
+
+        // Swipe support
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        carousel.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        carousel.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            if (touchEndX < touchStartX - swipeThreshold) {
+                // Swipe Left -> Next
+                let nextIndex = currentIndex + 1;
+                if (nextIndex >= slides.length) nextIndex = 0;
+                updateCarousel(nextIndex);
+            }
+            if (touchEndX > touchStartX + swipeThreshold) {
+                // Swipe Right -> Prev
+                let prevIndex = currentIndex - 1;
+                if (prevIndex < 0) prevIndex = slides.length - 1;
+                updateCarousel(prevIndex);
+            }
         }
     });
 
