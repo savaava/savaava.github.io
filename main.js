@@ -117,21 +117,25 @@
     // Utility to split text into animated words
     function splitTextToWords(selector) {
         const elements = document.querySelectorAll(selector);
+        let globalWordIndex = 0; // Use a global index to stagger words across all elements sequentially
+
         elements.forEach(element => {
             if (!element) return;
 
-            const text = element.innerText;
+            const text = element.innerText.trim();
             const words = text.split(/\s+/);
             element.innerHTML = '';
             element.setAttribute('aria-label', text);
 
-            words.forEach((word, index) => {
+            words.forEach((word) => {
+                if (word.length === 0) return;
                 const span = document.createElement('span');
                 span.innerText = word;
                 span.className = 'reveal-fade word-span';
-                span.style.transitionDelay = `${index * 40}ms`;
+                span.style.transitionDelay = `${globalWordIndex * 40}ms`;
                 element.appendChild(span);
                 element.appendChild(document.createTextNode(' '));
+                globalWordIndex++;
             });
         });
     }
@@ -177,11 +181,14 @@
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
-                // Cleanup inline transitionDelay after a short timeout so hover transitions are immediate
-                // We Wait 100ms to allow the browser to initiate the REVEAL transition with the stagger delay first.
-                setTimeout(() => {
+
+                // Cleanup inline transitionDelay ONLY after the reveal transition is complete.
+                // This ensures that the stagger delay is respected, and then cleared to 
+                // allow hover effects to react immediately.
+                entry.target.addEventListener('transitionend', () => {
                     entry.target.style.transitionDelay = '';
-                }, 100);
+                }, { once: true });
+
                 revealObserver.unobserve(entry.target);
             }
         });
@@ -300,7 +307,7 @@
                 if (targetProject) {
                     const navOffset = 84; // Navbar height (64) + buffer (20)
                     const targetTop = targetProject.getBoundingClientRect().top + window.pageYOffset - navOffset;
-                    
+
                     window.scrollTo({
                         top: targetTop,
                         behavior: 'smooth'
@@ -313,7 +320,7 @@
                         // Ensure it's not display:none if it was set initially
                         card.style.display = '';
                         card.classList.remove('project-hidden');
-                        
+
                         // Apply a tighter stagger for the new batch to make it feel responsive
                         const batchIndex = i - visibleCount;
                         const newDelay = batchIndex * 0.1;
