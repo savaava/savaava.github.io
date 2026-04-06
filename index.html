@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andrea Savastano — Portfolio</title>
+    <meta name="description"
+        content="Andrea Savastano — Computer Engineering student specializing in backend development, machine learning, and cybersecurity.">
+    <meta name="author" content="Andrea Savastano">
+    <meta name="theme-color" content="#0a0a0a">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ========== HERO SECTION ========== -->
+    <section id="hero">
+        <div id="hero-layout">
+
+            <!-- LEFT: Name + Info -->
+            <div id="hero-left">
+                <header id="hero-header">
+                    <h1 id="site-logo">ANDREA<br>SAVASTANO</h1>
+                </header>
+                <div id="hero-info">
+                    <div id="time-block">
+                        <span id="time-label">LOCAL TIME (UTC+2)</span>
+                        <div id="clock-row">
+                            <span id="clock-digits">00:00</span>
+                            <span id="ampm-block">
+                                <span id="am-indicator" class="period">am</span>
+                                <span id="pm-indicator" class="period active">pm</span>
+                            </span>
+                        </div>
+                        <div id="viewport-info">
+                            <span id="viewport-size">1920 x 1080</span>
+                            <span id="fps-counter">↳060 FPS</span>
+                        </div>
+                    </div>
+                    <div id="location-block">
+                        <span>ITALY</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT: Code Image with spotlight effect -->
+            <div id="hero-right">
+                <div id="hero-image-container">
+                    <!-- Blurred layer (always visible) -->
+                    <div id="hero-img-blurred" class="hero-img-layer"></div>
+                    <!-- Sharp layer (revealed by mouse spotlight) -->
+                    <div id="hero-img-sharp" class="hero-img-layer"></div>
+                    <!-- Vignette/glow frame -->
+                    <div id="hero-img-frame"></div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ========== ABOUT SECTION ========== -->
+    <section id="about" class="page-section">
+        <div class="section-inner">
+            <div class="section-header reveal">
+                <span class="section-number">01</span>
+                <h2 class="section-title">About</h2>
+                <div class="section-line"></div>
+            </div>
+
+            <div class="about-grid">
+                <!-- Bio Column -->
+                <div class="about-bio">
+                    <p class="bio-text">
+                        I am a Master's student in Computer Engineering, having graduated with laude in my Bachelor’s
+                        degree. I am deeply passionate about various fields of computer science, with a particular focus
+                        on back-end development, machine learning, and cybersecurity.
+                    </p>
+                    <p class="bio-text">
+                        I enjoy applying my technical knowledge through personal projects, selecting the most effective
+                        programming languages for each context, such as Python or Java. I take pride in documenting my
+                        work using LaTeX to ensure high standards of organization and clarity, which facilitates project
+                        scalability and future technical reviews.
+                    </p>
+                    <p class="bio-text">
+                        I strive to stay updated with industry trends.
+                    </p>
+                    <p class="bio-text">
+                        My goal is to ensure every project is technically sound, well-structured, and clearly presented.
+                    </p>
+                </div>
+
+                <!-- Focus Areas -->
+                <div class="about-focus">
+                    <h3 class="subsection-title reveal">Focus Areas</h3>
+                    <div class="focus-list">
+                        <div class="focus-item">
+                            <span class="focus-icon">⚙</span>
+                            <span class="focus-name">Backend Development</span>
+                        </div>
+                        <div class="focus-item">
+                            <span class="focus-icon">🛡️</span>
+                            <span class="focus-name">Cybersecurity</span>
+                        </div>
+                        <div class="focus-item">
+                            <span class="focus-icon">🧠</span>
+                            <span class="focus-name">Machine Learning</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skills -->
+                <div class="about-skills">
+
+                    <div class="skills-category">
+                        <h3 class="subsection-title reveal">Programming Languages</h3>
+                        <div class="skills-grid">
+                            <span class="skill-tag" data-category="lang">C</span>
+                            <span class="skill-tag" data-category="lang">MATLAB</span>
+                            <span class="skill-tag" data-category="lang">Java</span>
+                            <span class="skill-tag" data-category="lang">LaTeX</span>
+                            <span class="skill-tag" data-category="lang">Python</span>
+                            <span class="skill-tag" data-category="lang">R</span>
+                            <span class="skill-tag" data-category="lang">Bash</span>
+                            <span class="skill-tag" data-category="lang">Swift</span>
+                            <span class="skill-tag" data-category="lang">SQLite</span>
+                        </div>
+                    </div>
+
+                    <div class="skills-category">
+                        <h3 class="subsection-title reveal">IDE <span class="text-lower">and</span> Editors</h3>
+                        <div class="skills-grid">
+                            <span class="skill-tag" data-category="ide">VS Code</span>
+                            <span class="skill-tag" data-category="ide">IntelliJ IDEA</span>
+                            <span class="skill-tag" data-category="ide">MATLAB</span>
+                            <span class="skill-tag" data-category="ide">R Studio</span>
+                        </div>
+                    </div>
+
+                    <div class="skills-category">
+                        <h3 class="subsection-title reveal">Tools <span class="text-lower">and</span> Technologies</h3>
+                        <div class="skills-grid">
+                            <span class="skill-tag" data-category="tool">Git</span>
+                            <span class="skill-tag" data-category="tool">GitHub</span>
+                            <span class="skill-tag" data-category="tool">PostgreSQL</span>
+                            <span class="skill-tag" data-category="tool">Wireshark</span>
+                            <span class="skill-tag" data-category="tool">VirtualBox</span>
+                            <span class="skill-tag" data-category="tool">Docker</span>
+                            <span class="skill-tag" data-category="tool">Linux</span>
+                            <span class="skill-tag" data-category="tool">Postman</span>
+                            <span class="skill-tag" data-category="tool">Figma</span>
+                            <span class="skill-tag" data-category="tool">Notion</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== PROJECTS SECTION ========== -->
+    <section id="projects" class="page-section">
+        <div class="section-inner">
+            <div class="section-header reveal">
+                <span class="section-number">02</span>
+                <h2 class="section-title">Projects</h2>
+                <div class="section-line"></div>
+            </div>
+
+            <div class="projects-grid">
+
+                <!-- Project 1 -->
+                <article class="project-card" id="project-1">
+                    <div class="project-visuals">
+                        <div class="project-image-wrapper">
+                            <div class="carousel">
+                                <button class="carousel-btn prev">&#8249;</button>
+                                <div class="carousel-track">
+                                    <div class="carousel-slide">
+                                        <img src="./assets/Prj1_gns3/GNS3_Project_ArchitetturaRete.png"
+                                            alt="GNS3 Network Architecture" />
+                                    </div>
+                                    <div class="carousel-slide">
+                                        <img src="./assets/Prj1_gns3/Firewall_Router2_InterfacciaWAN.png"
+                                            alt="Firewall Router2 Interfaccia WAN" />
+                                    </div>
+                                </div>
+                                <button class="carousel-btn next">&#8250;</button>
+                            </div>
+                        </div>
+                        <div class="carousel-nav"></div>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">GNS3 Network Config</h3>
+                        <p class="project-full-title">Configurazione rete in GNS3: host, router, firewall, server</p>
+                        <p class="project-description">
+                            Progettazione di una rete sicura in GNS3 con segmentazione DMZ e
+                            perimetrale. Implementazione di regole firewall per i dispositivi di rete OPNSense, IDS
+                            Snort per la rilevazione di
+                            intrusioni e protezione da attacchi DoS al Web Server, e servizi Web/DB isolati nella DMZ
+                            realizzati tramite WordPress e MySQL. Configurazione
+                            automatizzata tramite script Bash.
+                        </p>
+                        <div class="project-tags">
+                            <span class="project-tag">Networking</span>
+                            <span class="project-tag">GNS3</span>
+                            <span class="project-tag">Linux</span>
+                            <span class="project-tag">Bash</span>
+                            <span class="project-tag">Wireshark</span>
+                            <span class="project-tag">VirtualBox</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Project 2 -->
+                <article class="project-card" id="project-2">
+                    <div class="project-visuals">
+                        <div class="project-image-wrapper">
+                            <div class="carousel">
+                                <button class="carousel-btn prev">&#8249;</button>
+                                <div class="carousel-track">
+                                    <div class="carousel-slide">
+                                        <img src="./assets/Prj2_map_sgd/6_ScatterDati_statisticheDecisioni.png"
+                                            alt="Decision Map Scatter Data" />
+                                    </div>
+                                    <div class="carousel-slide">
+                                        <img src="./assets/Prj2_map_sgd/4_SGD_costante.png" alt="SGD Constant Rate" />
+                                    </div>
+                                    <div class="carousel-slide">
+                                        <img src="./assets/Prj2_map_sgd/2_ScreePlot_BarPlot.png"
+                                            alt="Scree Plot / Bar Plot" />
+                                    </div>
+                                    <div class="carousel-slide">
+                                        <img src="./assets/Prj2_map_sgd/Calcoli_carta_2.jpeg"
+                                            alt="Paper Calculations" />
+                                    </div>
+                                </div>
+                                <button class="carousel-btn next">&#8250;</button>
+                            </div>
+                        </div>
+                        <div class="carousel-nav"></div>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">MAP & SGD Classifier</h3>
+                        <p class="project-full-title">Classificatore MAP e ottimizzazione SGD per Classificazione
+                            Binaria</p>
+                        <p class="project-description">
+                            Progetto Python di machine learning supervisionato.
+                            Implementa la riduzione dimensionale (PCA/SVD), calcola il classificatore bayesiano teorico
+                            (MAP) e ne stima iterativamente i parametri tramite ottimizzazione numerica (SGD), mettendo
+                            a confronto i risultati con grafici di convergenza 2D.
+                        </p>
+                        <div class="project-tags">
+                            <span class="project-tag">Python</span>
+                            <span class="project-tag">Machine Learning</span>
+                            <span class="project-tag">Data Analysis</span>
+                        </div>
+                        <a href="https://github.com/savaava/SVD-PCA_SGD_MAP_Classifier---Python" target="_blank"
+                            rel="noopener noreferrer" class="project-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path
+                                    d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+                            </svg>
+                            View on GitHub
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Project 3 -->
+                <article class="project-card" id="project-3">
+                    <div class="project-visuals">
+                        <div class="project-image-wrapper">
+                            <div class="carousel">
+                                <button class="carousel-btn prev">&#8249;</button>
+                                <div class="carousel-track">
+                                    <div class="carousel-slide">
+                                        <img src="./assets/Prj3_torcs/veicoloTorcsDimostrazioneCorsa.png"
+                                            alt="TORCS Autonomous Racing View" />
+                                    </div>
+                                </div>
+                                <button class="carousel-btn next">&#8250;</button>
+                            </div>
+                        </div>
+                        <div class="carousel-nav"></div>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">TORCS Autonomous Vehicle</h3>
+                        <p class="project-full-title">TORCS: Controllo di un veicolo autonomo virtuale</p>
+                        <p class="project-description">
+                            Sviluppo di un sistema di guida autonoma ibrido per il simulatore TORCS, integrando
+                            Java per la logica di controllo (state machine) e Python per l'addestramento di modelli
+                            di Machine Learning (MLPRegressor). La comunicazione bidirezionale avviene tramite
+                            bridge di rete, permettendo al veicolo di analizzare i sensori e reagire autonomamente.
+                            Il progetto è interamente gestito con Docker per garantire la massima portabilità e facilità
+                            di setup dell'ambiente.
+                        </p>
+                        <div class="project-tags">
+                            <span class="project-tag">Python</span>
+                            <span class="project-tag">Java</span>
+                            <span class="project-tag">Docker</span>
+                            <span class="project-tag">Machine Learning</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Project 4 -->
+                <article class="project-card" id="project-4">
+                    <div class="project-visuals">
+                        <div class="project-image-wrapper">
+                            <div class="carousel">
+                                <button class="carousel-btn prev">&#8249;</button>
+                                <div class="carousel-track">
+                                    <div class="carousel-slide">
+                                        <img src="./assets/Prj4_digitalTrasmission/2-PAMvs2-PPM.png"
+                                            alt="2-PAM vs 2-PPM Performance" />
+                                    </div>
+                                    <div class="carousel-slide">
+                                        <img src="./assets/Prj4_digitalTrasmission/QAM MC 1e6.png"
+                                            alt="QAM Monte Carlo Simulation" />
+                                    </div>
+                                    <div class="carousel-slide">
+                                        <img src="./assets/Prj4_digitalTrasmission/untitled2.png"
+                                            alt="Digital Modulation Analysis" />
+                                    </div>
+                                </div>
+                                <button class="carousel-btn next">&#8250;</button>
+                            </div>
+                        </div>
+                        <div class="carousel-nav"></div>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Digital Transmissions</h3>
+                        <p class="project-full-title">Trasmissioni Digitali: Modulazioni, fading e tecniche di diversità
+                        </p>
+                        <p class="project-description">
+                            Simulazione in MATLAB di sistemi di trasmissione digitale con modulazioni PAM, PPM, PSK
+                            e QAM. Il progetto analizza le prestazioni in termini di probabilità di errore tramite
+                            simulazioni Monte Carlo, valutando l'impatto di SNR e fading. Include l'implementazione
+                            di tecniche di diversity per migliorare la robustezza del segnale, con analisi dettagliata
+                            tramite grafici prestazionali.
+                        </p>
+                        <div class="project-tags">
+                            <span class="project-tag">Signal Processing</span>
+                            <span class="project-tag">MATLAB</span>
+                        </div>
+                        <a href="https://github.com/savaava/Trasmissioni-Digitali-Modulazioni-Project" target="_blank"
+                            rel="noopener noreferrer" class="project-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path
+                                    d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+                            </svg>
+                            View on GitHub
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Project 5 -->
+                <article class="project-card" id="project-5">
+                    <div class="project-visuals">
+                        <div class="project-image-wrapper">
+                            <div class="carousel">
+                                <button class="carousel-btn prev">&#8249;</button>
+                                <div class="carousel-track">
+                                    <div class="carousel-slide">
+                                        <img src="./assets/Prj5_placeholder/placeholder.png"
+                                            alt="Placeholder Image 1" />
+                                    </div>
+                                    <div class="carousel-slide">
+                                        <img src="./assets/Prj5_placeholder/placeholder.png"
+                                            alt="Placeholder Image 2" />
+                                    </div>
+                                </div>
+                                <button class="carousel-btn next">&#8250;</button>
+                            </div>
+                        </div>
+                        <div class="carousel-nav"></div>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Test Animation Project</h3>
+                        <p class="project-full-title">Placeholder per il controllo delle animazioni e del layout</p>
+                        <p class="project-description">
+                            Questo progetto è un placeholder inserito per verificare che le animazioni di reveal,
+                            lo stagger dei componenti, il carosello delle immagini e il lightbox funzionino
+                            correttamente anche con un numero maggiore di elementi nella griglia.
+                        </p>
+                        <div class="project-tags">
+                            <span class="project-tag">Test</span>
+                            <span class="project-tag">Animation</span>
+                            <span class="project-tag">Placeholder</span>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- Show More Projects Button -->
+            <div class="projects-action">
+                <button id="show-more-projects-btn" class="show-more-btn" style="display: none;">Show More
+                    Projects</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== RESUME SECTION ========== -->
+    <section id="resume" class="page-section">
+        <div class="section-inner">
+            <div class="section-header reveal">
+                <span class="section-number">03</span>
+                <h2 class="section-title">Resume</h2>
+                <div class="section-line"></div>
+            </div>
+
+            <div class="resume-content reveal">
+                <a href="assets/AndreaSavastanoCV.pdf" target="_blank" rel="noopener noreferrer" id="resume-link"
+                    class="resume-card">
+                    <div class="resume-preview-wrapper">
+                        <canvas id="cv-preview-canvas" class="resume-preview-canvas"></canvas>
+                        <div class="resume-blur-overlay"></div>
+                    </div>
+                    <div class="resume-card-info">
+                        <span class="resume-card-title">Curriculum Vitae</span>
+                        <span class="resume-card-cta">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                                <polyline points="15 3 21 3 21 9" />
+                                <line x1="10" y1="14" x2="21" y2="3" />
+                            </svg>
+                            View Full PDF
+                        </span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== CONTACT SECTION ========== -->
+    <section id="contact" class="page-section">
+        <div class="section-inner">
+            <div class="section-header reveal">
+                <span class="section-number">04</span>
+                <h2 class="section-title">Contact</h2>
+                <div class="section-line"></div>
+            </div>
+
+            <div class="contact-content reveal">
+                <div class="contact-links">
+                    <a href="https://github.com/savaava" target="_blank" rel="noopener noreferrer" id="contact-github"
+                        class="contact-card">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+                        </svg>
+                        <span class="contact-card-label">GitHub</span>
+                        <span class="contact-card-value">savaava</span>
+                        <span class="contact-card-arrow">→</span>
+                    </a>
+
+                    <a href="https://www.linkedin.com/in/andrea-savastano-8858b0343/" target="_blank"
+                        rel="noopener noreferrer" id="contact-linkedin" class="contact-card">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                            <rect x="2" y="9" width="4" height="12" />
+                            <circle cx="4" cy="4" r="2" />
+                        </svg>
+                        <span class="contact-card-label">LinkedIn</span>
+                        <span class="contact-card-value">Andrea Savastano</span>
+                        <span class="contact-card-arrow">→</span>
+                    </a>
+
+                    <a href="https://mail.google.com/mail/?view=cm&to=andreasavastano4388@gmail.com" id="contact-email"
+                        class="contact-card">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="4" width="20" height="16" rx="2" />
+                            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                        </svg>
+                        <span class="contact-card-label">Email</span>
+                        <span class="contact-card-value">andreasavastano4388@gmail.com</span>
+                        <span class="contact-card-arrow">→</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer id="site-footer" class="reveal">
+                <span>© 2026 Andrea Savastano</span>
+            </footer>
+        </div>
+    </section>
+
+    <!-- Global Lightbox -->
+    <div id="lightbox">
+        <div id="lightbox-content">
+            <button class="lightbox-close">&times;</button>
+            <div class="lightbox-img-wrapper" id="lightbox-target">
+                <!-- Target image or placeholder icon injected here via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== SIDE NAVIGATION ========== -->
+    <nav id="side-nav" class="side-nav" aria-label="Vertical navigation">
+        <div class="side-nav-wrapper">
+            <a href="#hero" class="side-nav-dot active" data-section="hero">
+                <span class="side-nav-label">Home</span>
+            </a>
+            <a href="#about" class="side-nav-dot" data-section="about">
+                <span class="side-nav-label">About</span>
+            </a>
+            <a href="#projects" class="side-nav-dot" data-section="projects">
+                <span class="side-nav-label">Projects</span>
+            </a>
+            <a href="#resume" class="side-nav-dot" data-section="resume">
+                <span class="side-nav-label">Resume</span>
+            </a>
+            <a href="#contact" class="side-nav-dot" data-section="contact">
+                <span class="side-nav-label">Contact</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Noise overlay for texture -->
+    <div id="noise-overlay"></div>
+
+    <!-- PDF.js for CV preview rendering -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <!-- Back to Top / Home Button -->
+    <button id="back-to-top" class="back-to-top" aria-label="Back to top">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+    </button>
+
+    <script src="main.js"></script>
+</body>
+
+</html>

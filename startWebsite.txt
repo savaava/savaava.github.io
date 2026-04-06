@@ -1,0 +1,5 @@
+accensione server locale:
+npx -y serve 'C:\Users\andre\Desktop\Repositories\MyPortfolio'
+
+spegnimento server locale:
+ctrl + c
