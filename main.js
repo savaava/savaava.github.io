@@ -161,15 +161,9 @@
     const allProjectCards = document.querySelectorAll('.project-card');
     allProjectCards.forEach((card, index) => {
         const isInitial = index < visibleCount;
-        const cardDelay = isInitial ? index * 0.4 : 0.05; // Minimal delay for hidden cards
+        const cardDelay = isInitial ? index * 0.15 : 0.05; 
         card.classList.add('reveal');
         card.style.transitionDelay = `${cardDelay}s`;
-
-        const visuals = card.querySelector('.project-visuals');
-        if (visuals) {
-            visuals.classList.add('reveal-visuals');
-            visuals.style.transitionDelay = `${cardDelay + 0.5}s`;
-        }
     });
 
     applyStagger('.skills-grid', '.skill-tag', 0.15);
@@ -198,7 +192,7 @@
     });
 
     function initReveal() {
-        const elements = document.querySelectorAll('.reveal, .reveal-fade, .reveal-visuals, .word-span');
+        const elements = document.querySelectorAll('.reveal, .reveal-fade, .word-span');
         elements.forEach(el => revealObserver.observe(el));
     }
 
@@ -298,71 +292,83 @@
     }
 
     // ---------- Project card visibility & Show More ----------
+    // ---------- Project Filtering & Show More Logic ----------
     const showMoreBtn = document.getElementById('show-more-projects-btn');
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    let currentFilter = 'all';
 
-    // Initial state setup for Project cards
-    allProjectCards.forEach((card, i) => {
-        if (i >= visibleCount) {
-            card.classList.add('project-hidden');
+    function updateProjectVisibility(isInitial = false) {
+        let matchIndex = 0;
+        const isShowingAll = showMoreBtn ? showMoreBtn.classList.contains('showing-all') : true;
+
+        allProjectCards.forEach((card) => {
+            const category = card.dataset.category;
+            const isMatch = currentFilter === 'all' || category === currentFilter;
+
+            if (isMatch) {
+                card.style.display = ''; 
+
+                const shouldHide = (currentFilter === 'all' && !isShowingAll && matchIndex >= visibleCount);
+
+                if (shouldHide) {
+                    card.classList.add('project-hidden');
+                } else {
+                    card.classList.remove('project-hidden');
+
+                    if (!isInitial) {
+                        // Reset reveal to re-trigger stagger when filtering
+                        card.classList.remove('visible');
+                        card.style.transitionDelay = `${matchIndex * 0.1}s`;
+                        revealObserver.observe(card);
+                    }
+                }
+                matchIndex++;
+            } else {
+                card.classList.add('project-hidden');
+            }
+        });
+
+        if (showMoreBtn) {
+            if (currentFilter === 'all' && allProjectCards.length > visibleCount) {
+                showMoreBtn.style.display = 'block';
+            } else {
+                showMoreBtn.style.display = 'none';
+            }
         }
-    });
+    }
+
+    updateProjectVisibility(true);
 
     if (showMoreBtn) {
-        showMoreBtn.style.display = 'block';
-
         showMoreBtn.addEventListener('click', () => {
             const isShowingAll = showMoreBtn.classList.contains('showing-all');
 
             if (isShowingAll) {
-                // Determine the 3rd project card (index-based)
-                const targetProject = allProjectCards[visibleCount - 1];
-
-                // Hide extra projects with smooth transition
-                allProjectCards.forEach((card, i) => {
-                    if (i >= visibleCount) {
-                        card.classList.add('project-hidden');
-                        // Reset inline display if it was set by some other script
-                        card.style.display = '';
-                    }
-                });
-
-                showMoreBtn.textContent = 'Show More Projects';
                 showMoreBtn.classList.remove('showing-all');
+                showMoreBtn.textContent = 'Show More Projects';
 
-                // Smooth scroll to the 3rd project card
+                const targetProject = allProjectCards[visibleCount - 1];
                 if (targetProject) {
-                    const navOffset = 84; // Navbar height (64) + buffer (20)
+                    const navOffset = 84;
                     const targetTop = targetProject.getBoundingClientRect().top + window.pageYOffset - navOffset;
-
-                    window.scrollTo({
-                        top: targetTop,
-                        behavior: 'smooth'
-                    });
+                    window.scrollTo({ top: targetTop, behavior: 'smooth' });
                 }
             } else {
-                // Show extra projects
-                allProjectCards.forEach((card, i) => {
-                    if (i >= visibleCount) {
-                        // Ensure it's not display:none if it was set initially
-                        card.style.display = '';
-                        card.classList.remove('project-hidden');
-
-                        // Apply a tighter stagger for the new batch to make it feel responsive
-                        const batchIndex = i - visibleCount;
-                        const newDelay = batchIndex * 0.1;
-                        card.style.transitionDelay = `${newDelay}s`;
-
-                        const visuals = card.querySelector('.project-visuals');
-                        if (visuals) {
-                            visuals.style.transitionDelay = `${newDelay + 0.3}s`;
-                        }
-                    }
-                });
-                showMoreBtn.textContent = 'Show Less Projects';
                 showMoreBtn.classList.add('showing-all');
+                showMoreBtn.textContent = 'Show Less Projects';
             }
+            updateProjectVisibility();
         });
     }
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            currentFilter = btn.dataset.filter;
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            updateProjectVisibility();
+        });
+    });
 
     // ---------- Carousel & Lightbox Logic ----------
     const carousels = document.querySelectorAll('.carousel');

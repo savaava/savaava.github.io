@@ -122,19 +122,13 @@ body {
 }
 
 .reveal.visible,
-.reveal-fade.visible,
-.reveal-visuals.visible {
+.reveal-fade.visible {
     opacity: 1;
     transform: translateY(0);
 }
 
 .reveal-fade.visible {
     transform: none;
-}
-
-.reveal-visuals.visible {
-    filter: blur(0) brightness(1);
-    transform: scale(1);
 }
 
 /* Ensure hover transitions are always immediate, overriding staggering transition-delays from JS */
@@ -147,16 +141,6 @@ body {
     transition-delay: 0s !important;
 }
 
-/* Cinematic image reveal specifically for project visuals */
-.reveal-visuals {
-    opacity: 0;
-    transform: scale(0.98);
-    filter: blur(10px) brightness(0.4);
-    transition: opacity 1.2s cubic-bezier(0.23, 1, 0.32, 1),
-        filter 1.2s cubic-bezier(0.23, 1, 0.32, 1),
-        transform 1.2s cubic-bezier(0.23, 1, 0.32, 1);
-    will-change: opacity, filter, transform;
-}
 
 /* ---------- NAVBAR ---------- */
 #navbar {
@@ -650,6 +634,43 @@ body {
 #projects {
     background: var(--bg);
     border-top: 1px solid var(--border-color);
+}
+
+.projects-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 48px;
+    animation-delay: 0.2s;
+}
+
+.filter-btn {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 1px;
+    padding: 10px 22px;
+    border: 1px solid var(--border-color);
+    border-radius: 100px;
+    color: var(--text-secondary);
+    background: var(--bg-card);
+    transition: all var(--transition-base);
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.filter-btn:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(255, 107, 138, 0.1);
+}
+
+.filter-btn.active {
+    color: var(--bg);
+    border-color: var(--accent);
+    background: var(--accent);
+    box-shadow: 0 0 15px var(--accent-glow);
 }
 
 .projects-grid {
