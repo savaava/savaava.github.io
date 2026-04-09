@@ -213,8 +213,9 @@
     function initGitHubCalendar() {
         const calendarHost = document.querySelector('.calendar');
         if (!calendarHost || typeof GitHubCalendar !== 'function') return;
+        const GITHUB_USERNAME = 'savaava';
 
-        GitHubCalendar('.calendar', 'savaava', {
+        GitHubCalendar('.calendar', GITHUB_USERNAME, {
             responsive: true,
             tooltips: true,
             summary_text: ''
@@ -222,6 +223,7 @@
 
         if (applyGitHubCalendarCellStyles()) return;
 
+        // Fallback delay used only if the initial observer callback is not triggered immediately.
         const CALENDAR_RENDER_DELAY_MS = 300;
         const calendarObserver = new MutationObserver(() => {
             if (applyGitHubCalendarCellStyles()) {
