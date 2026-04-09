@@ -1,0 +1,5 @@
+- Griglia commit github
+- Box dell'immagine di sfondo non deve avere spazi vuoti
+- le immagini dei progetti ingrandendole si devono vedere delle didascalie
+- da telefono si deve poter scorrere la scrollbar tenendo premuto e si deve sentire una vibrazione
+- Vorrei un button di switch di colore per guardare l'intero sito con il colore verde anzichè rosso (verde dei commit di github)
