@@ -215,25 +215,33 @@
     function initGitHubCalendar() {
         const calendarHost = document.querySelector('.calendar');
         if (!calendarHost || typeof GitHubCalendar !== 'function') return;
+        const calendarUsername = calendarHost.dataset.username || GITHUB_USERNAME;
+        let stylesApplied = false;
 
-        GitHubCalendar('.calendar', GITHUB_USERNAME, {
+        const applyStylesOnce = () => {
+            if (stylesApplied) return true;
+            stylesApplied = applyGitHubCalendarCellStyles();
+            return stylesApplied;
+        };
+
+        GitHubCalendar('.calendar', calendarUsername, {
             responsive: true,
             tooltips: true,
             summary_text: ''
         });
 
-        if (applyGitHubCalendarCellStyles()) return;
+        if (applyStylesOnce()) return;
 
         // Fallback delay for slower first paint/network cases where SVG nodes are injected slightly later.
         const calendarObserver = new MutationObserver(() => {
-            if (applyGitHubCalendarCellStyles()) {
+            if (applyStylesOnce()) {
                 calendarObserver.disconnect();
             }
         });
 
         calendarObserver.observe(calendarHost, { childList: true, subtree: true });
         window.setTimeout(() => {
-            if (applyGitHubCalendarCellStyles()) {
+            if (applyStylesOnce()) {
                 calendarObserver.disconnect();
             }
         }, CALENDAR_RENDER_DELAY_MS);
