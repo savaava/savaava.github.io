@@ -5,7 +5,6 @@
 
 (function () {
     'use strict';
-    const GITHUB_USERNAME = 'savaava';
     const CALENDAR_RENDER_DELAY_MS = 300;
 
     // ---------- Clock ----------
@@ -215,13 +214,22 @@
     function initGitHubCalendar() {
         const calendarHost = document.querySelector('.calendar');
         if (!calendarHost || typeof GitHubCalendar !== 'function') return;
-        const calendarUsername = calendarHost.dataset.username || GITHUB_USERNAME;
+        const calendarUsername = calendarHost.dataset.username;
+        if (!calendarUsername) return;
         let stylesApplied = false;
+        let fallbackTimerId = null;
 
         const applyStylesOnce = () => {
             if (stylesApplied) return true;
             stylesApplied = applyGitHubCalendarCellStyles();
             return stylesApplied;
+        };
+
+        const disconnectObserverAndTimer = (observer) => {
+            observer.disconnect();
+            if (fallbackTimerId !== null) {
+                window.clearTimeout(fallbackTimerId);
+            }
         };
 
         GitHubCalendar('.calendar', calendarUsername, {
@@ -235,14 +243,14 @@
         // Fallback delay for slower first paint/network cases where SVG nodes are injected slightly later.
         const calendarObserver = new MutationObserver(() => {
             if (applyStylesOnce()) {
-                calendarObserver.disconnect();
+                disconnectObserverAndTimer(calendarObserver);
             }
         });
 
         calendarObserver.observe(calendarHost, { childList: true, subtree: true });
-        window.setTimeout(() => {
+        fallbackTimerId = window.setTimeout(() => {
             if (applyStylesOnce()) {
-                calendarObserver.disconnect();
+                disconnectObserverAndTimer(calendarObserver);
             }
         }, CALENDAR_RENDER_DELAY_MS);
     }
