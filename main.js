@@ -161,7 +161,7 @@
     const allProjectCards = document.querySelectorAll('.project-card');
     allProjectCards.forEach((card, index) => {
         const isInitial = index < visibleCount;
-        const cardDelay = isInitial ? index * 0.15 : 0.05; 
+        const cardDelay = isInitial ? index * 0.15 : 0.05;
         card.classList.add('reveal');
         card.style.transitionDelay = `${cardDelay}s`;
     });
@@ -237,7 +237,8 @@
     let spotX = 0, spotY = 0;
     let isMouseInHero = false;
 
-    if (heroImgContainer && sharpLayer) {
+    // Only run the interactive spotlight if the device supports hover (desktop)
+    if (heroImgContainer && sharpLayer && window.matchMedia("(hover: hover)").matches) {
         const updateSpotlight = (x, y) => {
             const rect = heroImgContainer.getBoundingClientRect();
             heroMouseX = x - rect.left;
@@ -250,27 +251,10 @@
             updateSpotlight(e.clientX, e.clientY);
         });
 
-        // Touch interaction for mobile
-        heroImgContainer.addEventListener('touchstart', (e) => {
-            if (e.touches && e.touches[0]) {
-                updateSpotlight(e.touches[0].clientX, e.touches[0].clientY);
-            }
-        }, { passive: true });
-
-        heroImgContainer.addEventListener('touchmove', (e) => {
-            if (e.touches && e.touches[0]) {
-                updateSpotlight(e.touches[0].clientX, e.touches[0].clientY);
-            }
-        }, { passive: true });
-
+        // Touch interaction for mobile is disabled here because we want a clear image on mobile
+        // but kept for reference or if a mobile device supports hover (rare)
+        
         heroImgContainer.addEventListener('mouseleave', () => {
-            isMouseInHero = false;
-            sharpLayer.style.opacity = '0';
-        });
-
-        // Optional: Hide after release on touch? The user said "reveal on touch". 
-        // Let's hide it when touch ends to keep the "interactive" feel.
-        heroImgContainer.addEventListener('touchend', () => {
             isMouseInHero = false;
             sharpLayer.style.opacity = '0';
         });
@@ -306,7 +290,7 @@
             const isMatch = currentFilter === 'all' || category === currentFilter;
 
             if (isMatch) {
-                card.style.display = ''; 
+                card.style.display = '';
 
                 const shouldHide = (currentFilter === 'all' && !isShowingAll && matchIndex >= visibleCount);
 

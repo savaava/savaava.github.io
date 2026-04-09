@@ -396,20 +396,38 @@ body {
     background-repeat: no-repeat;
 }
 
+/* Base state: clear image for mobile/no-hover devices */
 #hero-img-blurred {
-    filter: blur(10px) brightness(0.4);
-    transform: scale(1.04);
-    /* prevent blur edge artifacts */
+    opacity: 0;
+    transform: scale(1);
 }
 
 #hero-img-sharp {
-    opacity: 0;
-    -webkit-mask-image: radial-gradient(circle 0px at 0px 0px, black 0%, transparent 100%);
-    mask-image: radial-gradient(circle 0px at 0px 0px, black 0%, transparent 100%);
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
+    opacity: 1;
     filter: brightness(0.85);
-    transition: opacity 0.25s ease;
+    /* Ensure no mask is present on mobile */
+    -webkit-mask-image: none;
+    mask-image: none;
+}
+
+/* Desktop: enable interactive blur/spotlight if hover is supported */
+@media (hover: hover) {
+    #hero-img-blurred {
+        opacity: 1;
+        filter: blur(10px) brightness(0.4);
+        transform: scale(1.04);
+        /* prevent blur edge artifacts */
+    }
+
+    #hero-img-sharp {
+        opacity: 0;
+        -webkit-mask-image: radial-gradient(circle 0px at 0px 0px, black 0%, transparent 100%);
+        mask-image: radial-gradient(circle 0px at 0px 0px, black 0%, transparent 100%);
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        filter: brightness(0.85);
+        transition: opacity 0.25s ease;
+    }
 }
 
 /* Vignette frame — edges of the image container */
@@ -1230,6 +1248,9 @@ body {
     color: var(--text-primary);
     flex: 1;
     text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .contact-card-arrow {
@@ -1300,7 +1321,7 @@ body {
 
 @media (max-width: 600px) {
     .back-to-top {
-        bottom: 24px;
+        bottom: 12px;
         right: 12px;
         width: 42px;
         height: 42px;
@@ -1425,10 +1446,57 @@ html {
     transform: translateY(-50%) translateX(-8px);
 }
 
-/* Hide on mobile/tablet to avoid overlap with content */
+/* Show on bottom for mobile/tablet */
 @media (max-width: 1024px) {
     .side-nav {
-        display: none;
+        right: auto;
+        left: 50%;
+        top: auto;
+        bottom: 24px;
+        transform: translateX(-50%);
+        align-items: center;
+        width: fit-content;
+    }
+
+    .side-nav-wrapper {
+        flex-direction: row;
+        gap: 32px;
+        padding: 12px 24px;
+        background: rgba(10, 10, 10, 0.4);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: 100px;
+        border: 1px solid var(--border-color);
+    }
+
+    /* Horizontal line connecting dots */
+    .side-nav-wrapper::before {
+        right: 32px;
+        left: 32px;
+        top: 50%;
+        bottom: auto;
+        width: auto;
+        height: 2px;
+        transform: translateY(-50%);
+        opacity: 0.8;
+    }
+
+    .side-nav-label {
+        right: auto;
+        left: 50%;
+        top: -42px;
+        bottom: auto;
+        transform: translateX(-50%) translateY(10px);
+    }
+
+    .side-nav-dot:hover .side-nav-label {
+        transform: translateX(-50%) translateY(0);
+    }
+
+    @media (max-width: 600px) {
+        .side-nav {
+            bottom: 17px;
+        }
     }
 }
 
@@ -1580,6 +1648,13 @@ html {
 
     .contact-card-value {
         font-size: 0.68rem;
+    }
+
+    /* Hide email domain on very small screens to prevent overflow */
+    @media (max-width: 480px) {
+        .contact-email-domain {
+            display: none;
+        }
     }
 
     #site-footer {
