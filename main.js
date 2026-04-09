@@ -200,12 +200,14 @@
 
     function applyGitHubCalendarCellStyles() {
         const cells = document.querySelectorAll('.github-wrapper .calendar rect');
+        if (!cells.length) return false;
+
         cells.forEach((cell) => {
             cell.setAttribute('rx', '2');
             cell.setAttribute('ry', '2');
-            cell.setAttribute('width', '10');
-            cell.setAttribute('height', '10');
         });
+
+        return true;
     }
 
     function initGitHubCalendar() {
@@ -218,12 +220,21 @@
             summary_text: ''
         });
 
+        if (applyGitHubCalendarCellStyles()) return;
+
+        const CALENDAR_RENDER_DELAY_MS = 300;
         const calendarObserver = new MutationObserver(() => {
-            applyGitHubCalendarCellStyles();
+            if (applyGitHubCalendarCellStyles()) {
+                calendarObserver.disconnect();
+            }
         });
 
         calendarObserver.observe(calendarHost, { childList: true, subtree: true });
-        window.setTimeout(applyGitHubCalendarCellStyles, 300);
+        window.setTimeout(() => {
+            if (applyGitHubCalendarCellStyles()) {
+                calendarObserver.disconnect();
+            }
+        }, CALENDAR_RENDER_DELAY_MS);
     }
 
     initGitHubCalendar();
