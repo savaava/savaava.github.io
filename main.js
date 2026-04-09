@@ -198,6 +198,36 @@
 
     initReveal();
 
+    function applyGitHubCalendarCellStyles() {
+        const cells = document.querySelectorAll('.github-wrapper .calendar rect');
+        cells.forEach((cell) => {
+            cell.setAttribute('rx', '2');
+            cell.setAttribute('ry', '2');
+            cell.setAttribute('width', '10');
+            cell.setAttribute('height', '10');
+        });
+    }
+
+    function initGitHubCalendar() {
+        const calendarHost = document.querySelector('.calendar');
+        if (!calendarHost || typeof GitHubCalendar !== 'function') return;
+
+        GitHubCalendar('.calendar', 'savaava', {
+            responsive: true,
+            tooltips: true,
+            summary_text: ''
+        });
+
+        const calendarObserver = new MutationObserver(() => {
+            applyGitHubCalendarCellStyles();
+        });
+
+        calendarObserver.observe(calendarHost, { childList: true, subtree: true });
+        window.setTimeout(applyGitHubCalendarCellStyles, 300);
+    }
+
+    initGitHubCalendar();
+
     // ---------- Cursor Glow ----------
     const glowEl = document.createElement('div');
     glowEl.id = 'cursor-glow';
