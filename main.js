@@ -5,6 +5,8 @@
 
 (function () {
     'use strict';
+    const GITHUB_USERNAME = 'savaava';
+    const CALENDAR_RENDER_DELAY_MS = 300;
 
     // ---------- Clock ----------
     const clockDigits = document.getElementById('clock-digits');
@@ -213,7 +215,6 @@
     function initGitHubCalendar() {
         const calendarHost = document.querySelector('.calendar');
         if (!calendarHost || typeof GitHubCalendar !== 'function') return;
-        const GITHUB_USERNAME = 'savaava';
 
         GitHubCalendar('.calendar', GITHUB_USERNAME, {
             responsive: true,
@@ -223,8 +224,7 @@
 
         if (applyGitHubCalendarCellStyles()) return;
 
-        // Fallback delay used only if the initial observer callback is not triggered immediately.
-        const CALENDAR_RENDER_DELAY_MS = 300;
+        // Fallback delay for slower first paint/network cases where SVG nodes are injected slightly later.
         const calendarObserver = new MutationObserver(() => {
             if (applyGitHubCalendarCellStyles()) {
                 calendarObserver.disconnect();
