@@ -1,5 +1,25 @@
 - Griglia commit github
 - Box dell'immagine di sfondo non deve avere spazi vuoti
-- le immagini dei progetti ingrandendole si devono vedere delle didascalie
-- da telefono si deve poter scorrere la scrollbar tenendo premuto e si deve sentire una vibrazione
+- Switch dell'immagine di sfondo
+
 - Vorrei un button di switch di colore per guardare l'intero sito con il colore verde anzichè rosso (verde dei commit di github)
+Prompt:
+Considera l'immaigne in figura.
+**Task:** Amplia il codice del sito web basandoti sull'immagine allegata, implementando un sistema di **Dual Color Mode** (Red/Green) che sostituisca la classica logica Light/Dark.
+
+**Specifiche del Design:**
+* **Modalità Rossa (Default, ossia quella attuale):** Mantieni l'attuale configurazione cromatica. Il rosso deve continuare a gestire i pulsanti, i box delle immagini, i pallini della scrollbar, i numeri delle sezioni, i filtri della sezione "Projects", la scritta "View on GitHub", gli stati `:hover` (es. "SHOW MORE PROJECTS", "View Full PDF") e il pulsante flottante in basso a destra.
+* **Modalità Verde (Nuova):** Crea una variante cromatica dove ogni elemento precedentemente rosso venga sostituito dal verde. 
+    * **Vincolo Cromatico:** Utilizza diverse tonalità di verde che siano **perfettamente coerenti** con la saturazione e il valore delle attuali tonalità di rosso. 
+    * **Contrasto:** Poiché il tema del sito è esclusivamente **Dark**, le tonalità di verde devono garantire leggibilità e un design armonioso, esattamente come per la modalità rossa
+
+**Implementazione dello Switch:**
+* **Componente:** Inserisci uno switch (basato sull'esempio in figura) posizionato in **basso a sinistra**.
+* **Logica Visiva:** Lo switch deve riflettere il colore della modalità attiva (si colora di rosso o di verde).
+* **Animazione:** Implementa un'animazione fluida e moderna per il passaggio tra le due modalità.
+
+**Requisiti Tecnici:**
+1.  Utilizza **CSS Variables** (Custom Properties) per gestire i colori (es. `--primary-color`, `--accent-color`).
+2.  Assicurati che il cambio di colore avvenga in modo armonico su tutti gli elementi menzionati (scrollbar, hover states, numeri di sezione).
+
+Per consigli, e domande chiedimi pure perchè il lavoro deve avvenire in maniera perfetta senza errori grafici o dimenticanze di elementi che rimangono in rosso.

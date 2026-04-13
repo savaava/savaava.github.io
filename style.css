@@ -1771,10 +1771,12 @@ html {
     pointer-events: none;
 }
 
-.side-nav-dot:hover .side-nav-label {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(-50%) translateX(-8px);
+@media (hover: hover) {
+    .side-nav-dot:hover .side-nav-label {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(-50%) translateX(-8px);
+    }
 }
 
 /* Show on bottom for mobile/tablet */
@@ -1820,8 +1822,10 @@ html {
         transform: translateX(-50%) translateY(10px);
     }
 
-    .side-nav-dot:hover .side-nav-label {
+    .side-nav-wrapper.scrubbing .side-nav-dot.active .side-nav-label {
         transform: translateX(-50%) translateY(0);
+        opacity: 1;
+        visibility: visible;
     }
 
     @media (max-width: 600px) {

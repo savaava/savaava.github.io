@@ -73,8 +73,10 @@
     // ---------- Navbar Scroll Effect ----------
     const sections = document.querySelectorAll('section[id]');
     const sideDots = document.querySelectorAll('.side-nav-dot');
+    let isSideNavScrubbing = false;
 
     function onScroll() {
+        if (isSideNavScrubbing) return;
         // Active section tracking (Scrollspy)
         let current = '';
         sections.forEach(section => {
@@ -110,6 +112,95 @@
             }
         });
     });
+
+    // ---------- Touch Scrubbing for Side Navigation ----------
+    const sideNavWrapper = document.querySelector('.side-nav-wrapper');
+    if (sideNavWrapper) {
+        let isScrubbing = false;
+        let dotData = [];
+
+        const updateDotData = () => {
+            dotData = Array.from(sideDots).map(dot => {
+                const rect = dot.getBoundingClientRect();
+                return {
+                    el: dot,
+                    x: rect.left + rect.width / 2,
+                    y: rect.top + rect.height / 2,
+                    section: dot.dataset.section,
+                    href: dot.getAttribute('href')
+                };
+            });
+        };
+
+        const handleScrub = (e) => {
+            if (!isScrubbing) return;
+            const touch = e.touches[0];
+            const x = touch.clientX;
+            const y = touch.clientY;
+
+            let closest = null;
+            let minDist = Infinity;
+
+            dotData.forEach(data => {
+                const dist = Math.sqrt(Math.pow(x - data.x, 2) + Math.pow(y - data.y, 2));
+                if (dist < minDist) {
+                    minDist = dist;
+                    closest = data;
+                }
+            });
+
+            // Threshold of 50px to stay "on" the bar
+            if (closest && minDist < 60) {
+                // Only update and vibrate if we moved to a NEW dot
+                if (!closest.el.classList.contains('active')) {
+                    sideDots.forEach(dot => dot.classList.remove('active'));
+                    closest.el.classList.add('active');
+                    if ('vibrate' in navigator) navigator.vibrate(10);
+                }
+
+                const lastTarget = sideNavWrapper.getAttribute('data-scrub-target');
+                if (lastTarget !== closest.section) {
+                    sideNavWrapper.setAttribute('data-scrub-target', closest.section);
+                    const target = document.querySelector(closest.href);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }
+            }
+        };
+
+        sideNavWrapper.addEventListener('touchstart', (e) => {
+            // Only trigger if touch starts near a dot or on the wrapper
+            sideNavWrapper.classList.add('scrubbing');
+            isSideNavScrubbing = true;
+            isScrubbing = true;
+            updateDotData();
+            handleScrub(e);
+        }, { passive: true });
+
+        sideNavWrapper.addEventListener('touchmove', (e) => {
+            if (!isScrubbing) return;
+            // Prevent page scroll only if we are actively scrubbing over the dots
+            if (e.cancelable) e.preventDefault();
+            handleScrub(e);
+        }, { passive: false });
+
+        sideNavWrapper.addEventListener('touchend', () => {
+            sideNavWrapper.classList.remove('scrubbing');
+            // Keep isSideNavScrubbing true for a bit longer to prevent onScroll from
+            // immediately overriding the active state while the smooth scroll is still moving.
+            setTimeout(() => {
+                isSideNavScrubbing = false;
+                // Force an onScroll update to sync everything once scrub is done
+                onScroll();
+            }, 600);
+
+            isScrubbing = false;
+            sideNavWrapper.removeAttribute('data-scrub-target');
+        });
+
+        window.addEventListener('resize', updateDotData);
+    }
 
     // ---------- Scroll Reveal & Staggered Animations ----------
     const revealElements = document.querySelectorAll('.reveal, .reveal-fade');
@@ -384,6 +475,67 @@
                 nav.appendChild(dot);
                 dots.push(dot);
             });
+
+            // ---------- Touch Scrubbing for Carousel Dots ----------
+            let isScrubbing = false;
+            let dotData = [];
+
+            const updateDotData = () => {
+                dotData = dots.map((dot, index) => {
+                    const rect = dot.getBoundingClientRect();
+                    return {
+                        el: dot,
+                        index,
+                        x: rect.left + rect.width / 2,
+                        y: rect.top + rect.height / 2
+                    };
+                });
+            };
+
+            const handleScrub = (e) => {
+                if (!isScrubbing) return;
+                const touch = e.touches[0];
+                const x = touch.clientX;
+                const y = touch.clientY;
+
+                let closest = null;
+                let minDist = Infinity;
+
+                dotData.forEach(data => {
+                    const dist = Math.sqrt(Math.pow(x - data.x, 2) + Math.pow(y - data.y, 2));
+                    if (dist < minDist) {
+                        minDist = dist;
+                        closest = data;
+                    }
+                });
+
+                if (closest && minDist < 40) {
+                    if (currentIndex !== closest.index) {
+                        // Update UI immediately
+                        dots.forEach(d => d.classList.remove('active'));
+                        closest.el.classList.add('active');
+
+                        updateCarousel(closest.index);
+                        if ('vibrate' in navigator) navigator.vibrate(10);
+                    }
+                }
+            };
+
+            nav.addEventListener('touchstart', (e) => {
+                isScrubbing = true;
+                updateDotData();
+                handleScrub(e);
+            }, { passive: true });
+
+            nav.addEventListener('touchmove', (e) => {
+                if (!isScrubbing) return;
+                if (e.cancelable) e.preventDefault();
+                handleScrub(e);
+            }, { passive: false });
+
+            nav.addEventListener('touchend', () => {
+                isScrubbing = false;
+            });
         }
 
         // Hide navigation if there is only 1 slide
@@ -541,6 +693,68 @@
                     lightboxNav.appendChild(dot);
                     lbDots.push(dot);
                 });
+
+                // ---------- Touch Scrubbing for Lightbox Dots ----------
+                let isLbScrubbing = false;
+                let lbDotData = [];
+
+                const updateLbDotData = () => {
+                    lbDotData = lbDots.map((dot, index) => {
+                        const rect = dot.getBoundingClientRect();
+                        return {
+                            el: dot,
+                            index,
+                            x: rect.left + rect.width / 2,
+                            y: rect.top + rect.height / 2
+                        };
+                    });
+                };
+
+                const handleLbScrub = (e) => {
+                    if (!isLbScrubbing) return;
+                    const touch = e.touches[0];
+                    const x = touch.clientX;
+                    const y = touch.clientY;
+
+                    let closest = null;
+                    let minDist = Infinity;
+
+                    lbDotData.forEach(data => {
+                        const dist = Math.sqrt(Math.pow(x - data.x, 2) + Math.pow(y - data.y, 2));
+                        if (dist < minDist) {
+                            minDist = dist;
+                            closest = data;
+                        }
+                    });
+
+                    if (closest && minDist < 40) {
+                        if (lbCurrentIndex !== closest.index) {
+                            // Update UI immediately
+                            lbDots.forEach(d => d.classList.remove('active'));
+                            closest.el.classList.add('active');
+
+                            updateLightboxCarousel(closest.index);
+                            if ('vibrate' in navigator) navigator.vibrate(10);
+                        }
+                    }
+                };
+
+                lightboxNav.addEventListener('touchstart', (e) => {
+                    isLbScrubbing = true;
+                    updateLbDotData();
+                    handleLbScrub(e);
+                }, { passive: true });
+
+                lightboxNav.addEventListener('touchmove', (e) => {
+                    if (!isLbScrubbing) return;
+                    if (e.cancelable) e.preventDefault();
+                    handleLbScrub(e);
+                }, { passive: false });
+
+                lightboxNav.addEventListener('touchend', () => {
+                    isLbScrubbing = false;
+                });
+
                 if (lightboxNext) lightboxNext.style.display = 'flex';
                 if (lightboxPrev) lightboxPrev.style.display = 'flex';
                 lightboxNav.style.display = 'flex';
