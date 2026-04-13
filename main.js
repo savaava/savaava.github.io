@@ -965,6 +965,31 @@
         });
     }
 
+    // ---------- Color Mode Switch ----------
+    const colorSwitch = document.getElementById('color-mode-switch');
+
+    function setColorMode(mode) {
+        if (mode === 'green') {
+            document.documentElement.setAttribute('data-color-mode', 'green');
+        } else {
+            document.documentElement.removeAttribute('data-color-mode');
+        }
+        localStorage.setItem('colorMode', mode);
+    }
+
+    // Initialize from localStorage (fallback — early script in <head> handles FOUC)
+    const savedMode = localStorage.getItem('colorMode');
+    if (savedMode === 'green') {
+        document.documentElement.setAttribute('data-color-mode', 'green');
+    }
+
+    if (colorSwitch) {
+        colorSwitch.addEventListener('click', () => {
+            const isGreen = document.documentElement.getAttribute('data-color-mode') === 'green';
+            setColorMode(isGreen ? 'red' : 'green');
+        });
+    }
+
     renderCVPreview();
 
 })();

@@ -20,8 +20,10 @@
     --text-secondary: #999999;
     --text-muted: #555555;
     --accent: #ff6b8a;
-    --accent-glow: rgba(255, 107, 138, 0.35);
-    --accent-soft: rgba(255, 107, 138, 0.10);
+    --accent-hover: #ff8fa8;
+    --accent-rgb: 255, 107, 138;
+    --accent-glow: rgba(var(--accent-rgb), 0.35);
+    --accent-soft: rgba(var(--accent-rgb), 0.10);
     --border-color: rgba(255, 255, 255, 0.08);
     --border-hover: rgba(255, 255, 255, 0.15);
     --font-display: 'Bebas Neue', 'Impact', sans-serif;
@@ -30,6 +32,13 @@
     --transition-bounce: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     --section-padding: 80px 48px 60px;
     --max-width: 1200px;
+}
+
+/* ---------- Green Color Mode Override ---------- */
+[data-color-mode="green"] {
+    --accent: #6bff8a;
+    --accent-hover: #8fffa8;
+    --accent-rgb: 107, 255, 138;
 }
 
 html {
@@ -382,7 +391,7 @@ body {
 
     /* Glowing shadow effect */
     box-shadow:
-        0 0 30px rgba(255, 107, 138, 0.08),
+        0 0 30px rgba(var(--accent-rgb), 0.08),
         0 0 80px rgba(0, 0, 0, 0.6);
 }
 
@@ -436,7 +445,7 @@ body {
     inset: 0;
     pointer-events: none;
     border-radius: 12px;
-    border: 1px solid rgba(255, 107, 138, 0.25);
+    border: 1px solid rgba(var(--accent-rgb), 0.25);
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
     background:
         linear-gradient(to right, rgba(10, 10, 10, 0.55) 0%, transparent 18%, transparent 82%, rgba(10, 10, 10, 0.55) 100%),
@@ -626,7 +635,7 @@ body {
     border-color: var(--accent);
     background: var(--accent-soft);
     transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(255, 107, 138, 0.1);
+    box-shadow: 0 4px 16px rgba(var(--accent-rgb), 0.1);
 }
 
 .skill-tag[data-category="lang"]:hover {
@@ -681,7 +690,7 @@ body {
     border-color: var(--accent);
     background: var(--accent-soft);
     transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(255, 107, 138, 0.1);
+    box-shadow: 0 4px 16px rgba(var(--accent-rgb), 0.1);
 }
 
 .filter-btn.active {
@@ -881,7 +890,7 @@ body {
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: rgba(255, 107, 138, 0.2);
+    background: rgba(var(--accent-rgb), 0.2);
     /* Soft accent */
     border: none;
     cursor: pointer;
@@ -1159,7 +1168,7 @@ body {
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: rgba(255, 107, 138, 0.2);
+    background: rgba(var(--accent-rgb), 0.2);
     border: none;
     cursor: pointer;
     padding: 0;
@@ -1264,11 +1273,11 @@ body {
 }
 
 .lightbox-close:hover {
-    background: rgba(220, 38, 38, 0.2);
-    border-color: #dc2626;
-    color: #dc2626;
+    background: var(--accent-soft);
+    border-color: var(--accent);
+    color: var(--accent);
     transform: scale(1.1) rotate(90deg);
-    box-shadow: 0 0 25px rgba(220, 38, 38, 0.3);
+    box-shadow: 0 0 25px var(--accent-glow);
 }
 
 .lightbox-close:active {
@@ -1338,7 +1347,7 @@ body {
 
 .project-link:hover {
     gap: 14px;
-    color: #ff8fa8;
+    color: var(--accent-hover);
 }
 
 .project-link svg {
@@ -1370,7 +1379,7 @@ body {
     border-color: var(--accent);
     color: var(--accent);
     background: var(--accent-soft);
-    box-shadow: 0 4px 20px rgba(255, 107, 138, 0.15);
+    box-shadow: 0 4px 20px rgba(var(--accent-rgb), 0.15);
     transform: translateY(-2px);
 }
 
@@ -1404,7 +1413,7 @@ body {
     border-color: var(--accent);
     background: var(--bg-card-hover);
     transform: translateY(-4px);
-    box-shadow: 0 20px 60px rgba(255, 107, 138, 0.08);
+    box-shadow: 0 20px 60px rgba(var(--accent-rgb), 0.08);
 }
 
 .resume-preview-wrapper {
@@ -1477,8 +1486,8 @@ body {
 }
 
 .resume-card:hover .resume-card-cta {
-    background: rgba(255, 107, 138, 0.18);
-    box-shadow: 0 0 20px rgba(255, 107, 138, 0.1);
+    background: rgba(var(--accent-rgb), 0.18);
+    box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.1);
     gap: 14px;
 }
 
@@ -1540,7 +1549,7 @@ body {
     border-color: var(--accent);
     background: var(--bg-card-hover);
     transform: translateY(-3px);
-    box-shadow: 0 12px 40px rgba(255, 107, 138, 0.08);
+    box-shadow: 0 12px 40px rgba(var(--accent-rgb), 0.08);
 }
 
 .contact-card:hover .contact-card-arrow {
@@ -1638,7 +1647,7 @@ body {
     border-color: var(--accent);
     color: var(--accent);
     background: var(--accent-soft);
-    box-shadow: 0 10px 30px rgba(255, 107, 138, 0.15);
+    box-shadow: 0 10px 30px rgba(var(--accent-rgb), 0.15);
     transform: translateY(-4px);
 }
 
@@ -1667,10 +1676,113 @@ body {
     border-radius: 50%;
     pointer-events: none;
     z-index: 1001;
-    background: radial-gradient(circle, rgba(255, 107, 138, 0.05) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(var(--accent-rgb), 0.05) 0%, transparent 70%);
     transform: translate(-50%, -50%);
     transition: opacity 0.3s ease;
     opacity: 0;
+}
+
+/* ---------- Color Mode Switch ---------- */
+.color-switch {
+    position: fixed;
+    bottom: 16px;
+    left: 16px;
+    z-index: 1000;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+}
+
+.switch-track {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 56px;
+    height: 28px;
+    background: var(--accent);
+    border-radius: 100px;
+    padding: 0 8px;
+    transition: background 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 2px 12px rgba(var(--accent-rgb), 0.3),
+                inset 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+.switch-thumb {
+    position: absolute;
+    left: 3px;
+    width: 22px;
+    height: 22px;
+    background: #ffffff;
+    border-radius: 50%;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+                width 0.2s ease,
+                border-radius 0.2s ease;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    z-index: 2;
+}
+
+[data-color-mode="green"] .switch-thumb {
+    transform: translateX(28px);
+}
+
+.switch-icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    color: rgba(255, 255, 255, 0.9);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.switch-icon svg {
+    width: 14px;
+    height: 14px;
+}
+
+/* Red mode (default): leaf hidden under thumb (left), fire visible (right) */
+.switch-icon-leaf {
+    opacity: 0;
+    transform: scale(0.6);
+}
+
+.switch-icon-fire {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Green mode: leaf visible (left), fire hidden under thumb (right) */
+[data-color-mode="green"] .switch-icon-leaf {
+    opacity: 1;
+    transform: scale(1);
+}
+
+[data-color-mode="green"] .switch-icon-fire {
+    opacity: 0;
+    transform: scale(0.6);
+}
+
+.color-switch:hover .switch-track {
+    box-shadow: 0 4px 20px rgba(var(--accent-rgb), 0.5),
+                inset 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+.color-switch:active .switch-thumb {
+    width: 26px;
+    border-radius: 13px;
+}
+
+@media (max-width: 600px) {
+    .color-switch {
+        bottom: 12px;
+        left: 12px;
+    }
 }
 
 /* ---------- Scrollbar (Hidden for Modern UI) ---------- */
