@@ -967,26 +967,27 @@
 
     // ---------- Color Mode Switch ----------
     const colorSwitch = document.getElementById('color-mode-switch');
+    const modes = ['red', 'green', 'blue'];
 
     function setColorMode(mode) {
-        if (mode === 'green') {
-            document.documentElement.setAttribute('data-color-mode', 'green');
-        } else {
+        if (mode === 'red') {
             document.documentElement.removeAttribute('data-color-mode');
+        } else {
+            document.documentElement.setAttribute('data-color-mode', mode);
         }
         localStorage.setItem('colorMode', mode);
     }
 
-    // Initialize from localStorage (fallback — early script in <head> handles FOUC)
-    const savedMode = localStorage.getItem('colorMode');
-    if (savedMode === 'green') {
-        document.documentElement.setAttribute('data-color-mode', 'green');
-    }
+    // Initialize from localStorage
+    const savedMode = localStorage.getItem('colorMode') || 'red';
+    setColorMode(savedMode);
 
     if (colorSwitch) {
         colorSwitch.addEventListener('click', () => {
-            const isGreen = document.documentElement.getAttribute('data-color-mode') === 'green';
-            setColorMode(isGreen ? 'red' : 'green');
+            const currentMode = localStorage.getItem('colorMode') || 'red';
+            const currentIndex = modes.indexOf(currentMode);
+            const nextIndex = (currentIndex + 1) % modes.length;
+            setColorMode(modes[nextIndex]);
         });
     }
 
